@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "Gamba 106.3 FM Online",
+  "description": "This app stream Gamba 106.3 FM online",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Gamba FM"
+  },
+
+  "icons": {
+    "19":  "icon.png",
+    "48":  "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "background": {
+    "page": "index.html"
+  },
+
+  "permissions": [
+    "background",
+    "http://gambafm.lorini.net:10630/;"
+  ],
+
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+}

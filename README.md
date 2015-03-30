@@ -15,7 +15,7 @@ The following steps are need to add the complement in Chrome.
 
 1) Go to `chrome://extensions` url.
 
-2) Drag and drop the file `chromeApp-gambaOnline.crx` in the list of extensions to add this app.
+2) Drag and drop the file `chromeApp-GambaOnline.crx` in the list of extensions to add this app.
 
 3) For developers, enable the Developer Mode checking this option on the top right of the extension list. Then click in "Load unpacked extension..." button and search the folder (chromeApp-Gamba Online) that contains the repository files downloaded.
 

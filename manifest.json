@@ -3,17 +3,17 @@
 
   "name": "Gamba 106.3 FM Online",
   "description": "This app stream Gamba 106.3 FM online",
-  "version": "1.1",
+  "version": "1.1.1",
 
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "icons/icon.png",
     "default_title": "Gamba FM"
   },
 
   "icons": {
-    "19":  "icon.png",
-    "48":  "icon48.png",
-    "128": "icon128.png"
+    "19":  "icons/icon.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
 
   "background": {

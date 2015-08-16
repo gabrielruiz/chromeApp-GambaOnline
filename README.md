@@ -22,9 +22,19 @@ For Developer Propose:
 
 2) Drag and drop the file `chromeApp-GambaOnline.crx` in the list of extensions to add this app.
 
-3) For developers, enable the Developer Mode checking this option on the top right of the extension list. Then click in "Load unpacked extension..." button and search the folder (chromeApp-Gamba Online) that contains the repository files downloaded.
+## Install the repository version using .crx file:
 
-4) Once it was loaded the app in Chrome you can test your local code changes clicking in "Reload" link in the extension list in order to reload the app with the last local changes.
+This is an alternative way to add this repository version in development:
+
+1) Go to `chrome://extensions` url.
+
+2) Drag and drop the file downloaded `chromeApp-GambaOnline.crx` in the list of extensions to add this app.
+
+## For Developers:
+
+1) Enable the Developer Mode checking this option on the top right of the extension list. Then click in "Load unpacked extension..." button and search the folder (chromeApp-Gamba Online) that contains the repository files downloaded.
+
+2) Once it was loaded the app in Chrome you can test your local code changes clicking in "Reload" link in the extension list in order to reload the app with the last local changes.
 
 
 I'll improve this extension as soon as possible to learn more about the use of Chrome Extension and I acquire more experience on it.

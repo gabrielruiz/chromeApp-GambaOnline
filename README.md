@@ -8,19 +8,13 @@ The chrome extension was made with JQuery 1.11.2 and JPlayer 2.9.2.
 
 ## Quickstart:
 
-The following steps are need to add the complement in Chrome.
+The following steps are needed to add the official latest version published in Chrome Web Store.
 
 1) Go to [Gamba 106.3 FM Online - Chrome Web Store](https://chrome.google.com/webstore/detail/gamba-1063-fm-online/fkfjmigadmikjjjgikhnnenojifcgffb)
 
 2) Add the Gamba FM chrome extension.
 
 3) The app icon should be available on the app bar. Click on it to play or pause the radio.
-
-For Developer Propose:
-
-1) Go to `chrome://extensions` url.
-
-2) Drag and drop the file `chromeApp-GambaOnline.crx` in the list of extensions to add this app.
 
 ## Install the repository version using .crx file:
 

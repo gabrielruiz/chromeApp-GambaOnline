@@ -2,6 +2,8 @@
 
 This chrome extension app was made to use it as complement in Chrome to listen Gamba FM Online easily and quickly.
 
+![Gamba FM APP Online](/img/gambaFmChromeApp.png)
+
 ## Information
 
 The chrome extension was made with JQuery 1.11.2 and JPlayer 2.9.2.
@@ -15,6 +17,8 @@ The following steps are needed to add the official latest version published in C
 2) Add the Gamba FM chrome extension.
 
 3) The app icon should be available on the app bar. Click on it to play or pause the radio.
+
+![Gamba FM APP Online icon](/img/gambaFmApp.jpg)
 
 ## Install the repository version using .crx file:
 

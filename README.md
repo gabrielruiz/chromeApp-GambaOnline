@@ -1,19 +1,16 @@
 ## Chrome extension APP
-==============
 
 This chrome extension app was made to use it as complement in Chrome to listen Gamba FM Online easily and quickly.
 
 ## Information
-============== 
 
 The chrome extension was made with JQuery 1.11.2 and JPlayer 2.9.2.
 
 ## Quickstart:
-==============
 
 The following steps are need to add the complement in Chrome.
 
-1) Go to ![https://chrome.google.com/webstore/detail/gamba-1063-fm-online/fkfjmigadmikjjjgikhnnenojifcgffb]('https://chrome.google.com/webstore/detail/gamba-1063-fm-online/fkfjmigadmikjjjgikhnnenojifcgffb')
+1) Go to ![Gamba 106.3 FM Online - Chrome Web Store]('https://chrome.google.com/webstore/detail/gamba-1063-fm-online/fkfjmigadmikjjjgikhnnenojifcgffb')
 
 2) Add the Gamba FM chrome extension.
 

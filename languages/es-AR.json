@@ -1,0 +1,20 @@
+{
+  "APP": {
+    "PAUSED_GAMBA_FM": "Gamba FM Pausado",
+    "PLAYING_GAMBA_FM": "Escucando Gamba FM"
+  },
+  "ERROR": {
+    "ERROR_URL_NOT_RESPONSE": "ERROR: URL NO RESPONDE",
+    "ERROR_URL_NOT_SET": "ERROR: URL NO DEFINIDA"
+  },
+  "LOG": {
+    "CLEARING_BUFFER": "Borrando buffer",
+    "CLEARING_TIMEOUT": "Removiendo tiempo de espera",
+    "INITIALIZING_PLAY": "Inicializando la reproducción",
+    "LOADING_PLAYER": "Cargando reproductor",
+    "PAUSING_PLAYER": "Pausando reproductor",
+    "PLAYING_NOW": "Reproduciendo ahora",
+    "RUNNING_TIMEOUT": "Tiempo de espera agotado",
+    "STARTING_STREAMING": "Comenzando streaming de audio"
+  }
+}

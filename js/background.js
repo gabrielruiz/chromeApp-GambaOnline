@@ -9,143 +9,166 @@ chrome.browserAction.getTitle({}, function(title){
 });
 
 
-var data = {
+var ln = window.navigator.language || navigator.browserLanguage,
+	data = {
         "streamUrl" : "http://gambafm.lorini.net:10630/;",
         "streamUrl2": "http://www.fm.net.ve:9000/GAMBAFM",
         "streamType": "mp3"
     },
     streamMedia = new Object(),
     timeInterval = (60 * 1000) * 60,
-    timeReconnection = (60 * 1000) * 15,
+    timeReconnection = (60 * 1000) * 5,
+    reconnectionAttempts = 10,
+    reconnectingCounter = 0,
     radioState = 'pause',
-    timeOut,
-    reconnect = 0;
+    timeOut = null,
+    _t,
+    jplayer_1;
 
 
 function initPlayer() {
 
-    var jplayer_1 = $("#jquery_jplayer_1"),
-        ready = false,
+    var ready = false,
         playerState;
 
     streamMedia[data['streamType']] = data['streamUrl'];
     jplayer_1.jPlayer({
     ready: function () {
-        $(this).jPlayer("setMedia", streamMedia );
         ready = true;
         playerState = "ready";
-        console.log("loading player");
+        console.log(_t.LOG["LOADING_PLAYER"]);
     },
     play: function(event){
         SetTimeOut();
         playerState = "play";
-        console.log("playing now");
+        console.log(_t.LOG["PLAYING_NOW"]);
     },
     pause: function(event) {
         //kill the media to change the "pause" normal action.        
-        jplayer_1.jPlayer("clearMedia");
+        clearStreamBuffered();
         ClearTimeOut();
         playerState = "pause";
-        console.log("pausing the player");
+        console.log(_t.LOG["PAUSING_PLAYER"]);
     },
-
     error: function(event) {
         //check if the user clicked on the play button after a pause interval.
         if (ready && event.jPlayer.error.type == $.jPlayer.error.URL_NOT_SET) {
-            jplayer_1.jPlayer("setMedia", streamMedia).jPlayer("play");
-            console.log('ERROR URL NOT SET');
+            playStream();
+            console.error(_t.ERROR['ERROR_URL_NOT_SET']);
             return;
         }
         
         if(ready && event.jPlayer.error.type == $.jPlayer.error.URL) {
-            ReConnect(jplayer_1, playerState);
-            console.log('ERROR URL NOT RESPONSE');
+            ReConnect(playerState);
+            console.error(_t.ERROR['ERROR_URL_NOT_RESPONSE']);
         }
     },
     swfPath: "jplayer",
     supplied: data['streamType'],
     wmode: "window",
+    solution: "html",
     smoothPlayBar: true,
     keyEnabled: true,
-    volume: 0.6
+    volume: 0.7,
+    preload: "none"
     });
 }
 
-function clearStreamBuffered(streamMedia) {
-    $("#jquery_jplayer_1").jPlayer("setMedia", streamMedia).jPlayer("play");
+function playStream() {
+    jplayer_1.jPlayer("setMedia", streamMedia ).jPlayer("play");
+    console.log(_t.LOG['STARTING_STREAMING']);
+}
+
+function clearStreamBuffered() {
+    jplayer_1.jPlayer("clearMedia");
+    console.log(_t.LOG['CLEARING_BUFFER']);
 }
 
 function SetTimeOut(METHOD, TIMEINTERVAL) {
 
-    ClearTimeOut();
+    if(timeOut !== null) {
+		ClearTimeOut();
+    }
 
     var time = (typeof TIMEINTERVAL !== 'undefined') ? TIMEINTERVAL : timeInterval;
     
     if (typeof METHOD !== 'undefined') {
         timeOut = setTimeout(function () {
-            console.log('Running timeout');
+            console.log(_t.LOG['RUNNING_TIMEOUT']);
             METHOD(); 
         }, time);
         return;
     }
 
     timeOut = setTimeout(function () {
-        console.log('Running timeout');
-        clearStreamBuffered(streamMedia); 
+        console.log(_t.LOG['RUNNING_TIMEOUT']);
+        playStream();
     }, time);
 
-    console.log('Set timeout');
+    console.log(_t.LOG['INITIALIZING_PLAY']);
 }
 
 function ClearTimeOut() {
     clearTimeout(timeOut);
     timeOut = null;
-    console.log('Clear timeout');
+    console.log(_t.LOG['CLEARING_TIMEOUT']);
 }
 
-function ReConnect(JPLAYER, STATE) {
+function ReConnect(STATE) {
 
     var state = (typeof STATE !== 'undefined') ? STATE : "play";
 
-    if(reconnect === 5) {
-        reconnect = 0;
+    if(reconnectingCounter === reconnectionAttempts) {
+        reconnectingCounter = 0;
         SetTimeOut(function () {
-            ReConnect(JPLAYER, STATE);
+            ReConnect(STATE);
         }, timeReconnection);
         return;
     }
 
-    if (reconnect%2 === 0) {
+    if (reconnectingCounter%2 === 0) {
         streamMedia[data['streamType']] = data['streamUrl'];
-        JPLAYER.jPlayer("setMedia", streamMedia).jPlayer(state);
+        jplayer_1.jPlayer("setMedia", streamMedia).jPlayer(state);
         
     }
     else {
         streamMedia[data['streamType']] = data['streamUrl2'];
-        JPLAYER.jPlayer("setMedia", streamMedia).jPlayer(state);
+        jplayer_1.jPlayer("setMedia", streamMedia).jPlayer(state);
     }
 
-    reconnect++;
+    reconnectingCounter++;
+}
+
+function init() {
+	var lang;
+	if (ln.match(/en\-.+/)) {
+		lang = 'en-US';
+	}
+	else {
+		lang = 'en-AR';
+	}
+	return $.getJSON('../languages/' + lang +'.json');
 }
 
 $(document).ready(function() {
-
-    initPlayer();
-
+	jplayer_1 = $("#jquery_jplayer_1");
+	init().then(function(value) {
+		_t = value;
+    	initPlayer();
+	});
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-
     if (radioState === 'pause') {
         chrome.browserAction.setIcon({path:"../icons/iconPlay.png"});
-        chrome.browserAction.setTitle({title:"Playing Gamba FM"});
+        chrome.browserAction.setTitle({title: _t.APP["PLAYING_GAMBA_FM"]});
         radioState = 'play';
+        playStream();
     }
     else {
         chrome.browserAction.setIcon({path:"../icons/iconPause.png"});
-        chrome.browserAction.setTitle({title:"Paused Gamba FM"});
+        chrome.browserAction.setTitle({title: _t.APP["PAUSED_GAMBA_FM"]});
         radioState = 'pause';
+    	jplayer_1.jPlayer(radioState);
     }
-
-    $("#jquery_jplayer_1").jPlayer(radioState);
 });

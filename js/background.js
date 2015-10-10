@@ -145,7 +145,7 @@ function init() {
 		lang = 'en-US';
 	}
 	else {
-		lang = 'en-AR';
+		lang = 'es-AR';
 	}
 	return $.getJSON('../languages/' + lang +'.json');
 }

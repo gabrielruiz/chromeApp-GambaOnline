@@ -1,7 +1,7 @@
 {
   "APP": {
     "PAUSED_GAMBA_FM": "Gamba FM Pausado",
-    "PLAYING_GAMBA_FM": "Escucando Gamba FM"
+    "PLAYING_GAMBA_FM": "Reproduciendo Gamba FM"
   },
   "ERROR": {
     "ERROR_URL_NOT_RESPONSE": "ERROR: URL NO RESPONDE",

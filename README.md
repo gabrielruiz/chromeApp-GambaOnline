@@ -1,14 +1,17 @@
-## Chrome extension APP
+Chrome extension APP
+======
 
 This chrome extension app was made to use it as complement in Chrome to listen Gamba FM Online easily and quickly.
 
 ![Gamba FM APP Online](/img/gambaFmChromeApp.png)
 
-## Information
+Information
+======
 
 The chrome extension was made with JQuery 1.11.2 and JPlayer 2.9.2.
 
-## Quickstart:
+Quickstart:
+======
 
 The following steps are needed to add the official latest version published in Chrome Web Store.
 
@@ -20,7 +23,8 @@ The following steps are needed to add the official latest version published in C
 
 ![Gamba FM APP Online icon](/img/gambaFmApp.jpg)
 
-## Install the repository version using .crx file:
+Install the repository version using .crx file:
+======
 
 This is an alternative way to add this repository version in development:
 
@@ -28,7 +32,8 @@ This is an alternative way to add this repository version in development:
 
 2) Drag and drop the file downloaded `chromeApp-GambaOnline.crx` in the list of extensions to add this app.
 
-## For Developers:
+For Developers:
+======
 
 1) Enable the Developer Mode checking this option on the top right of the extension list. Then click in "Load unpacked extension..." button and search the folder (chromeApp-Gamba Online) that contains the repository files downloaded.
 
@@ -36,3 +41,25 @@ This is an alternative way to add this repository version in development:
 
 
 I'll improve this extension as soon as possible to learn more about the use of Chrome Extension and I acquire more experience on it.
+
+Releases:
+======
+
++ **1.1.0**: 
+  - First Gamba FM APP Online stable version streaming quickly with simple features.
+  - Play and pause streaming in one click over the app icon.
+
++ **1.1.1**: 
+  - Fix minor issues.
+  - Simplify and optimize code lines. 
+  - Restructure code in folders to improve file organization.
+
+Next Release:
+======
+
++ **1.2.0**: 
+  - Support multi-languages (Spanish and English) used in App status icon and logs. 
+  - Implement HTML5 player instead of flash. 
+  - Optimize App avoiding preloads unnecessarily when the player is not used and start buffering when the user starting to play.
+  - Increment reconnection attempts and reduce the timeout to wait after end the reconnection attempts to try again.
+  - Add improves cleaning the buffer when the user pause streaming avoiding possible desynchronization when it is played again.

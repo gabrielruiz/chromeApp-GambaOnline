@@ -45,17 +45,8 @@ I'll improve this extension as soon as possible to learn more about the use of C
 Releases:
 ======
 
-+ **1.1.0**: 
-  - First Gamba FM APP Online stable version streaming quickly with simple features.
-  - Play and pause streaming in one click over the app icon.
-
-+ **1.1.1**: 
-  - Fix minor issues.
-  - Simplify and optimize code lines. 
-  - Restructure code in folders to improve file organization.
-
-Next Release:
-======
++ **1.2.1**:
+  - Fix Spanish language issue.
 
 + **1.2.0**: 
   - Support multi-languages (Spanish and English) used in App status icon and logs. 
@@ -63,3 +54,18 @@ Next Release:
   - Optimize App avoiding preloads unnecessarily when the player is not used and start buffering when the user starting to play.
   - Increment reconnection attempts and reduce the timeout to wait after end the reconnection attempts to try again.
   - Add improves cleaning the buffer when the user pause streaming avoiding possible desynchronization when it is played again.
+
++ **1.1.1**: 
+  - Fix minor issues.
+  - Simplify and optimize code lines. 
+  - Restructure code in folders to improve file organization.
+
++ **1.1.0**: 
+  - First Gamba FM APP Online stable version streaming quickly with simple features.
+  - Play and pause streaming in one click over the app icon.
+
+Future Features:
+======
+
++ Adjust volumen by the user.
++ Show volumen value.

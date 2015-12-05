@@ -3,6 +3,13 @@
     "PAUSED_GAMBA_FM": "Paused Gamba FM",
     "PLAYING_GAMBA_FM": "Playing Gamba FM"
   },
+  "OPTIONS": {
+    "SETTING_PAGE_TITLE": "Gamba FM Chrome App Setting",
+    "SETTING_TITLE": "Setting",
+    "VOLUME_OPTION": "Volume",
+    "RESET_BUTTON": "Reset",
+    "COPYRIGHT_TEXT": "Gamba FM Chrome App - Unofficial"
+  },
   "ERROR": {
     "ERROR_URL_NOT_RESPONSE": "ERROR: URL NOT RESPONSE",
     "ERROR_URL_NOT_SET": "ERROR: URL NOT SET"

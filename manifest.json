@@ -20,8 +20,11 @@
     "page": "index.html"
   },
 
+  "options_page": "options.html",
+
   "permissions": [
     "background",
+    "storage",
     "http://gambafm.lorini.net:10630/;"
   ],
 

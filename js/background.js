@@ -32,7 +32,18 @@ function initPlayer() {
         playerState;
 
     streamMedia[data['streamType']] = data['streamUrl'];
-    jplayer_1.jPlayer({
+
+    chrome.storage.local.get('volume', function(data) {
+      var volumeValue = data.volume;
+      if(typeof volumeValue === 'undefined') {
+        volumeValue = 0.7;
+      }
+      settingPlayer(volumeValue);
+    });
+}
+
+function settingPlayer(volumeValue) {
+  jplayer_1.jPlayer({
     ready: function () {
         ready = true;
         playerState = "ready";
@@ -44,7 +55,7 @@ function initPlayer() {
         console.log(_t.LOG["PLAYING_NOW"]);
     },
     pause: function(event) {
-        //kill the media to change the "pause" normal action.        
+        //kill the media to change the "pause" normal action.
         clearStreamBuffered();
         ClearTimeOut();
         playerState = "pause";
@@ -57,7 +68,7 @@ function initPlayer() {
             console.error(_t.ERROR['ERROR_URL_NOT_SET']);
             return;
         }
-        
+
         if(ready && event.jPlayer.error.type == $.jPlayer.error.URL) {
             ReConnect(playerState);
             console.error(_t.ERROR['ERROR_URL_NOT_RESPONSE']);
@@ -69,9 +80,9 @@ function initPlayer() {
     solution: "html",
     smoothPlayBar: true,
     keyEnabled: true,
-    volume: 0.7,
+    volume: volumeValue,
     preload: "none"
-    });
+  });
 }
 
 function playStream() {
@@ -91,11 +102,11 @@ function SetTimeOut(METHOD, TIMEINTERVAL) {
     }
 
     var time = (typeof TIMEINTERVAL !== 'undefined') ? TIMEINTERVAL : timeInterval;
-    
+
     if (typeof METHOD !== 'undefined') {
         timeOut = setTimeout(function () {
             console.log(_t.LOG['RUNNING_TIMEOUT']);
-            METHOD(); 
+            METHOD();
         }, time);
         return;
     }
@@ -129,7 +140,7 @@ function ReConnect(STATE) {
     if (reconnectingCounter%2 === 0) {
         streamMedia[data['streamType']] = data['streamUrl'];
         jplayer_1.jPlayer("setMedia", streamMedia).jPlayer(state);
-        
+
     }
     else {
         streamMedia[data['streamType']] = data['streamUrl2'];
@@ -171,4 +182,17 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         radioState = 'pause';
     	jplayer_1.jPlayer(radioState);
     }
+});
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (key in changes) {
+    var storageChange = changes[key];
+    jplayer_1.jPlayer("volume", storageChange.newValue);
+    console.log('Storage key "%s" in namespace "%s" changed. ' +
+                'Old value was "%s", new value is "%s".',
+                key,
+                namespace,
+                storageChange.oldValue,
+                storageChange.newValue);
+  }
 });

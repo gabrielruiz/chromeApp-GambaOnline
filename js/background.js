@@ -33,13 +33,22 @@ function initPlayer() {
 
     streamMedia[data['streamType']] = data['streamUrl'];
 
-    chrome.storage.local.get('volume', function(data) {
-      var volumeValue = data.volume;
-      if(typeof volumeValue === 'undefined') {
-        volumeValue = 0.7;
+    chrome.storage.local.get('sync', function(response) {
+      if(response.sync) {
+        chrome.storage.sync.get('volume', initSetVolume);
       }
-      settingPlayer(volumeValue);
-    });
+      else {
+        chrome.storage.local.get('volume', initSetVolume);
+      }
+    })
+}
+
+function initSetVolume(data) {
+  var volumeValue = data.volume;
+  if(typeof volumeValue === 'undefined') {
+    volumeValue = 0.7;
+  }
+  settingPlayer(volumeValue);
 }
 
 function settingPlayer(volumeValue) {
@@ -187,7 +196,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for (key in changes) {
     var storageChange = changes[key];
-    jplayer_1.jPlayer("volume", storageChange.newValue);
+    if(key === 'volume') {
+      jplayer_1.jPlayer("volume", storageChange.newValue);
+    }
     console.log('Storage key "%s" in namespace "%s" changed. ' +
                 'Old value was "%s", new value is "%s".',
                 key,

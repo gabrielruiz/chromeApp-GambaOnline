@@ -7,8 +7,10 @@
     "SETTING_PAGE_TITLE": "Configuración Gamba FM Chrome App",
     "SETTING_TITLE": "Configuración",
     "VOLUME_OPTION": "Volumen",
+    "VOLUME_SYNC_VALUE": "Sincronizar el volumen en todos los navegadores instalados",
+    "VOLUME_SYNC_TITLE_ATTR": "Tildar para sincronizar el volumen globalmente o Sin tildar para usar localmente",
     "RESET_BUTTON": "Reestablecer",
-    "COPYRIGHT_TEXT": "Gamba FM Chrome App - No Official"
+    "COPYRIGHT_TEXT": "Gamba FM Chrome App - no oficial"
   },
   "ERROR": {
     "ERROR_URL_NOT_RESPONSE": "ERROR: URL NO RESPONDE",

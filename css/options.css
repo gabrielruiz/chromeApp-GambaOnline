@@ -7,6 +7,10 @@ footer {
   display: none;
 }
 
+#volume-sync-value {
+  cursor: help;
+}
+
 #volumeSlider .slider-selection {
 	background-image: linear-gradient(to bottom, #89cdef 0%, #81bfde 100%);
 }

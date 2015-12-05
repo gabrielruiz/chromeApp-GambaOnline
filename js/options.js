@@ -14,22 +14,48 @@ function init() {
 	return $.getJSON('../languages/' + lang +'.json');
 }
 
+function storageLocalSet(data) {
+  chrome.storage.local.set({ volume: data.volume, sync: data.sync }, function() {
+    if(data.oldValue && data.newValue) {
+      console.log('Volume changed from ' + data.oldValue + ' to ' + data.newValue);
+    }
+    else {
+      console.log('Local storage volume set to ' + data.volume + '.');
+      console.log('Local storage setting sync = ' + data.sync + '.');
+    }
+  });
+}
+
+function storageSyncSet(data) {
+  chrome.storage.sync.set({volume: data.volume}, function() {
+    if(data.oldValue && data.newValue) {
+      console.log('Sync storage saved. Old value: ' + data.oldValue + ' |  New Value: ' + data.newValue);
+    }
+    else {
+      console.log('Sync storage saved.');
+    }
+  });
+}
+
 $(document).ready(function() {
   init().then(function(value) {
 
     var _t = value,
         date = new Date(),
-        $volumeValue = $("#volume-value");
+        $volumeValue = $("#volume-value"),
+        $volumeSyncValue = $('#volume-sync-value');
 
     //Translate:
     $('#options-page-title').html(_t.OPTIONS["SETTING_PAGE_TITLE"]);
     $('#setting-title').html(_t.OPTIONS["SETTING_TITLE"] + ':');
     $('#volume-option').html(_t.OPTIONS["VOLUME_OPTION"]);
+    $('#volume-sync-option').html(_t.OPTIONS["VOLUME_SYNC_VALUE"]);
+    $('#volume-sync-value').attr('title', _t.OPTIONS["VOLUME_SYNC_TITLE_ATTR"]);
     $('#resetBtn').html(_t.OPTIONS["RESET_BUTTON"]);
     $('#copyright').html(date.getFullYear() + ' ' + _t.OPTIONS["COPYRIGHT_TEXT"] + ' - ');
 
 
-    chrome.storage.local.get('volume', function(data) {
+    function setSliderVolume(data) {
       var volumeSliderValue = data.volume;
 
       if(typeof volumeSliderValue === 'undefined') {
@@ -38,6 +64,9 @@ $(document).ready(function() {
       else if(volumeSliderValue > 0) {
          volumeSliderValue = volumeSliderValue * 100;
       }
+
+      //Showing the page when the translate and the volume are loaded.
+      showPage();
 
       $volumeValue.slider({
         id: 'volumeSlider',
@@ -48,24 +77,63 @@ $(document).ready(function() {
         tooltip: 'always'
       });
 
-      //Showing the page when the Translate and the Slider are loaded.
-      showPage();
+    }
 
+    chrome.storage.local.get('sync', function(response) {
+      if(response.sync) {
+        $volumeSyncValue.attr('checked', true);
+        chrome.storage.sync.get('volume', setSliderVolume);
+      }
+      else {
+        chrome.storage.local.get('volume', setSliderVolume);
+      }
     });
 
     $volumeValue.bind('change', function(data){
       var volumeValue = data.value.newValue / 100;
-      chrome.storage.local.set({volume: volumeValue}, function() {
-        console.log('Volume changed from ' + data.value.oldValue + ' to ' + data.value.newValue);
+
+      chrome.storage.local.get('sync', function(response) {
+        var sendData = {
+              volume: volumeValue,
+              oldValue: data.value.oldValue,
+              newValue: data.value.newValue
+            };
+
+        if(response.sync) {
+          storageSyncSet(sendData);
+          sendData.sync = true;
+          storageLocalSet(sendData);
+        }
+        else {
+          sendData.sync = false;
+          storageLocalSet(sendData);
+        }
       });
     });
 
+    $volumeSyncValue.bind('change',function(element) {
+      var volumeValue = $volumeValue.slider('getValue') / 100,
+          sendData = {
+            volume: volumeValue
+          };
+      if(element.target.checked) {
+        storageSyncSet(sendData);
+        sendData.sync = true;
+        storageLocalSet(sendData);
+      }
+      else {
+        sendData.sync = false;
+        storageLocalSet(sendData);
+      }
+    })
+
     $('#resetBtn').click(function() {
-      chrome.storage.local.set({volume: 0.7}, function(data) {
-        var oldValue = $volumeValue.slider('getValue');
-        $volumeValue.slider('setValue', 70);
-        console.log('Volume reset from ' + oldValue + ' to 70');
-      });
+      $volumeValue.slider('setValue', 70);
+      if($volumeSyncValue.is(':checked')) {
+        $volumeSyncValue.click();
+      }
+      console.log('Sent Volume reset to 70');
+      console.log('Sent Sync reset to false');
     });
   });
 });

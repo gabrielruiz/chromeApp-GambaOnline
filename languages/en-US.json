@@ -7,8 +7,10 @@
     "SETTING_PAGE_TITLE": "Gamba FM Chrome App Setting",
     "SETTING_TITLE": "Setting",
     "VOLUME_OPTION": "Volume",
+    "VOLUME_SYNC_VALUE": "Synchronize volume in all browsers installed",
+    "VOLUME_SYNC_TITLE_ATTR": "Checked to synchronize volume globally or Unchecked to set locally",
     "RESET_BUTTON": "Reset",
-    "COPYRIGHT_TEXT": "Gamba FM Chrome App - Unofficial"
+    "COPYRIGHT_TEXT": "Gamba FM Chrome App - unofficial"
   },
   "ERROR": {
     "ERROR_URL_NOT_RESPONSE": "ERROR: URL NOT RESPONSE",

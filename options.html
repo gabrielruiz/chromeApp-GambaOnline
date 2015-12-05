@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="components/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="components/bootstrap/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="components/bootstrap/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" type="text/css" href="css/options.css">
+    <link rel="stylesheet" type="text/css" href="css/options.min.css">
   </head>
   <body class="container" style="display: none">
     <div class="row">
@@ -17,24 +17,29 @@
       <h3 id="setting-title"></h3>
     </div>
     <div class="row">
-      <div class="col-md-offset-3 col-md-6">
-        <img class="center-block" src='https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/img/gambaFmApp.jpg'
-             title="Gamba FM Chrome App" alt="Gamba FM Chrome App" width="150">
+      <div class="col-sm-offset-3 col-sm-6">
+        <img class="center-block" src='icons/icon128.png'
+             title="Gamba FM Chrome App" alt="Gamba FM Chrome App" width="85">
       </div>
     </div>
     <br><br><br>
     <div class="row">
-      <div class="center-block">
-      <div id="volume-option" class="col-md-5 text-right option_name"></div>
-      <div class="option_picker">
+      <label for="volume-value" id="volume-option" class="col-xs-4 col-sm-5 text-right option_name"></label>
+      <div class="col-xs-8 col-sm-7 option_picker">
         <input id="volume-value" type="text" />
-      </div>
       </div>
     </div>
     <br><br>
     <div class="row">
-      <div class="col-md-offset-7">
-      <button id="resetBtn" class="btn btn-md btn-default"></button>
+      <label for="volume-sync-value" id="volume-sync-option" class="col-xs-4 col-sm-5 text-right option_name"></label>
+      <div class="col-xs-8 col-sm-7 option_picker">
+        <input id="volume-sync-value" type="checkbox" />
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="col-xs-offset-8 col-xs-4 col-sm-offset-7 col-sm-5">
+        <button id="resetBtn" class="btn btn-md btn-default"></button>
       </div>
     </div>
 
@@ -48,6 +53,6 @@
     <script src="components/jquery/jquery.min.js"></script>
     <script src="components/bootstrap/js/bootstrap.min.js"></script>
     <script src="components/bootstrap/js/bootstrap-slider.min.js"></script>
-    <script src="js/options.js"></script>
+    <script src="js/options.min.js"></script>
   </body>
 </html>

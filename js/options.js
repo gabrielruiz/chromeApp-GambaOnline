@@ -62,7 +62,8 @@ $(document).ready(function() {
         volumeSliderValue = 70;
       }
       else if(volumeSliderValue > 0) {
-         volumeSliderValue = volumeSliderValue * 100;
+        volumeSliderValue = volumeSliderValue * 100;
+        $volumeSyncValue.attr('checked', true);
       }
 
       //Showing the page when the translate and the volume are loaded.
@@ -80,11 +81,12 @@ $(document).ready(function() {
     }
 
     chrome.storage.local.get('sync', function(response) {
-      if(response.sync) {
-        $volumeSyncValue.attr('checked', true);
+      if(typeof response.sync === 'undefined' || response.sync) {
+        console.log('Loading Volume from Sync Storage.');
         chrome.storage.sync.get('volume', setSliderVolume);
       }
       else {
+        console.log('Loading Volume from Local Storage.');
         chrome.storage.local.get('volume', setSliderVolume);
       }
     });
@@ -134,6 +136,27 @@ $(document).ready(function() {
       }
       console.log('Sent Volume reset to 70');
       console.log('Sent Sync reset to false');
+    });
+
+    chrome.storage.onChanged.addListener(function(changes, namespace) {
+      for (key in changes) {
+        var storageChange = changes[key];
+        if(namespace === 'sync') {
+          if(key === 'volume' && $volumeSyncValue.is(':checked')) {
+            var updateVolumeValue = storageChange.newValue * 100;
+            $volumeValue.slider('setValue',  updateVolumeValue);
+            console.log('Update Volume by Sync to ' + updateVolumeValue);
+          } else {
+            console.log('Sync update is called but not applied.');
+          }
+          console.log('Storage key "%s" in namespace "%s" changed. ' +
+                      'Old value was "%s", new value is "%s".',
+                      key,
+                      namespace,
+                      storageChange.oldValue,
+                      storageChange.newValue);
+        }
+      }
     });
   });
 });

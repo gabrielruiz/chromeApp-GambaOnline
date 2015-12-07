@@ -21,7 +21,15 @@ The following steps are needed to add the official latest version published in C
 
 3) The app icon should be available on the app bar. Click on it to play or pause the radio.
 
-![Gamba FM APP Online icon](/img/gambaFmApp.jpg)
+![Gamba FM APP Online icon](/img/clickOnGambaApp.gif)
+
+4) Adjust the volume app doing right click on the app icon and select Options.
+
+![Gamba FM APP Options](/img/clickOnOptions.gif)
+
+5) Configure the volmen app as you want applying it both locally or globally synchronously in all the chrome browsers where the app is installed.
+
+![Gamba FM APP Settings](/img/settingGambaApp.gif)
 
 Install the repository version using .crx file:
 ======
@@ -45,6 +53,14 @@ I'll improve this extension as soon as possible to learn more about the use of C
 Releases:
 ======
 
++ **1.3.0**:
+  - Adjust volume by the user in options page.
+  - Show volume value in options page.
+  - Allow to set the volume value locally or globally in all the chrome browsers where the app is installed.
+  - Translate improves.
+  - Implement css and js minification.
+  - Move external libraries in a new components folder improving the project structure.
+
 + **1.2.1**:
   - Fix Spanish language issue.
 
@@ -67,5 +83,4 @@ Releases:
 Future Features:
 ======
 
-+ Adjust volumen by the user.
-+ Show volumen value.
++ Allow keyboard shortcuts to play, pause and adjust the volume by the user.

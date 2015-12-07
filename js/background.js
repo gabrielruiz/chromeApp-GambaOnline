@@ -34,26 +34,34 @@ function initPlayer() {
     streamMedia[data['streamType']] = data['streamUrl'];
 
     chrome.storage.local.get('sync', function(response) {
-      if(typeof response.sync === 'undefined' || response.sync) {
+      if(response.sync) {
         console.log('Loading Volume from Sync Storage.');
         chrome.storage.sync.get('volume', initSetVolume);
       }
-      else {
+      else if(response.sync == false){
         console.log('Loading Volume from Local Storage.');
         chrome.storage.local.get('volume', initSetVolume);
+      }
+      else {
+        console.log('::Setting by default::');
+        chrome.storage.local.set({volume: 0.7, sync: false}, function() {
+          console.log('Init in LOCAL storage.');
+          chrome.storage.local.set({}, function() {
+            initSetVolume();
+          });
+        });
       }
     })
 }
 
 function initSetVolume(data) {
-  var volumeValue = data.volume;
-  if(typeof volumeValue === 'undefined') {
-    volumeValue = 0.7;
-    console.log('Init Volume in 0.7 by default.');
+  var volumeValue = 0.7,
+      byDefaultText = 'By default.';
+  if(data && data.volume) {
+    volumeValue = data.volume;
+    byDefaultText = '';
   }
-  else {
-    console.log('Init Volume in ' + volumeValue + '.');
-  }
+  console.log('Init Volume in ' + volumeValue + '. ' + byDefaultText);
   settingPlayer(volumeValue);
 }
 
@@ -206,13 +214,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
       var storageChange = changes[key],
           newVolumeValue = storageChange.newValue,
           oldVolumenValue = storageChange.oldValue;
-      if(key === 'volume' && namespace === typeStorage) {
-        jplayer_1.jPlayer("volume", newVolumeValue);
-        console.log('Update Volume in ' + typeStorage + ' to ' + newVolumeValue);
-      }
-      else {
-        console.log('Ignoring Volume updating because is set in ' + typeStorage
-                    + ' intead of ' +  namespace);
+      if(key === 'volume') {
+        if(namespace === typeStorage) {
+          jplayer_1.jPlayer("volume", newVolumeValue);
+          console.log('Update Volume in ' + typeStorage + ' to ' + newVolumeValue);
+        }
+        else {
+          console.log('Ignoring Volume updating because is set in ' + typeStorage
+                      + ' intead of ' +  namespace);
+        }
       }
       console.log('Storage key "%s" in namespace "%s" changed. ' +
                   'Old value was "%s", new value is "%s".',

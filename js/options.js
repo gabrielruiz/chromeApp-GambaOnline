@@ -56,15 +56,13 @@ $(document).ready(function() {
     $('#copyright').html(date.getFullYear() + ' ' + _t.OPTIONS["COPYRIGHT_TEXT"] + ' - ');
 
     function initSliderVolumeCbk(data) {
-      var volumeSliderValue = data.volume;
-
-      if(typeof volumeSliderValue === 'undefined') {
-        volumeSliderValue = 70;
+      var volumeSliderValue = 70;
+          byDefaultText = 'By Default.';
+      if(data && data.volume) {
+        volumeSliderValue = data.volume * 100;
+        byDefaultText = '';
       }
-      else if(volumeSliderValue > 0) {
-        volumeSliderValue = volumeSliderValue * 100;
-      }
-      console.log('Init Setting volume to ' + volumeSliderValue + '.');
+      console.log('Init Setting volume to ' + volumeSliderValue + '. ' + byDefaultText);
 
       //Showing the page when the translate and the volume are loaded.
       showPage();
@@ -93,7 +91,7 @@ $(document).ready(function() {
     }
 
     chrome.storage.local.get('sync', function(response) {
-      if(typeof response.sync === 'undefined' || response.sync) {
+      if(response.sync) {
         console.log('Loading Volume from SYNC Storage.');
         chrome.storage.sync.get('volume', initSliderVolumeCbk);
         initCheckboxToogle(true);

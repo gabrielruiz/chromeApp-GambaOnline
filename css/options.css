@@ -1,3 +1,17 @@
+.btn.btn-primary {
+  background-image: -webkit-linear-gradient(top,#149bdf 0,#0480be 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#149bdf),to(#0480be));
+  background-image: linear-gradient(to bottom,#149bdf 0,#0480be 100%);
+  background-position: 0;
+  border-color: #357ebd;
+}
+
+.btn.btn-primary:hover {
+  background-image: -webkit-linear-gradient(top,#1177C7 0,#1E80DA 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#1177C7),to(#1E80DA));
+  background-image: linear-gradient(to bottom,#1177C7 0,#1E80DA 100%);
+}
+
 footer {
   position: absolute;
   bottom: 0;
@@ -7,8 +21,9 @@ footer {
   display: none;
 }
 
-#volume-sync-value {
+#volume-sync-option {
   cursor: help;
+  margin-top: .5%;
 }
 
 #volumeSlider .slider-selection {

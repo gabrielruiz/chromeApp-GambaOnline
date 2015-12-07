@@ -14,21 +14,23 @@ function init() {
 	return $.getJSON('../languages/' + lang +'.json');
 }
 
-function storageLocalSet(data) {
-  chrome.storage.local.set({ volume: data.volume, sync: data.sync }, function() {
-    if(data.oldValue && data.newValue) {
+function storageLocalSet(setData, data) {
+  chrome.storage.local.set(setData, function() {
+    if(data && data.oldValue && data.newValue) {
       console.log('Volume changed from ' + data.oldValue + ' to ' + data.newValue);
     }
     else {
-      console.log('Local storage volume set to ' + data.volume + '.');
-      console.log('Local storage setting sync = ' + data.sync + '.');
+      if(setData.volume) {
+        console.log('Local storage volume = ' + setData.volume + '.');
+      }
+      console.log('Local storage sync = ' + setData.sync + '.');
     }
   });
 }
 
-function storageSyncSet(data) {
-  chrome.storage.sync.set({volume: data.volume}, function() {
-    if(data.oldValue && data.newValue) {
+function storageSyncSet(setData, data) {
+  chrome.storage.sync.set({volume: setData.volume}, function() {
+    if(data && data.oldValue && data.newValue) {
       console.log('Sync storage saved. Old value: ' + data.oldValue + ' |  New Value: ' + data.newValue);
     }
     else {
@@ -42,20 +44,18 @@ $(document).ready(function() {
 
     var _t = value,
         date = new Date(),
-        $volumeValue = $("#volume-value"),
-        $volumeSyncValue = $('#volume-sync-value');
+        $volumeInput = $("#volume-input"),
+        $volumeSyncInput = $('#volume-sync-input');
 
     //Translate:
-    $('#options-page-title').html(_t.OPTIONS["SETTING_PAGE_TITLE"]);
+    $('#options-page-title').html(_t.OPTIONS["SETTING_HEAD_TITLE"]);
     $('#setting-title').html(_t.OPTIONS["SETTING_TITLE"] + ':');
     $('#volume-option').html(_t.OPTIONS["VOLUME_OPTION"]);
-    $('#volume-sync-option').html(_t.OPTIONS["VOLUME_SYNC_VALUE"]);
-    $('#volume-sync-value').attr('title', _t.OPTIONS["VOLUME_SYNC_TITLE_ATTR"]);
+    $('#volume-sync-option').html(_t.OPTIONS["VOLUME_SYNC_VALUE"]).attr('title', _t.OPTIONS["VOLUME_SYNC_TITLE_ATTR"]);
     $('#resetBtn').html(_t.OPTIONS["RESET_BUTTON"]);
     $('#copyright').html(date.getFullYear() + ' ' + _t.OPTIONS["COPYRIGHT_TEXT"] + ' - ');
 
-
-    function setSliderVolume(data) {
+    function initSliderVolumeCbk(data) {
       var volumeSliderValue = data.volume;
 
       if(typeof volumeSliderValue === 'undefined') {
@@ -63,13 +63,13 @@ $(document).ready(function() {
       }
       else if(volumeSliderValue > 0) {
         volumeSliderValue = volumeSliderValue * 100;
-        $volumeSyncValue.attr('checked', true);
       }
+      console.log('Init Setting volume to ' + volumeSliderValue + '.');
 
       //Showing the page when the translate and the volume are loaded.
       showPage();
 
-      $volumeValue.slider({
+      $volumeInput.slider({
         id: 'volumeSlider',
         min: 0,
         max: 100,
@@ -77,77 +77,89 @@ $(document).ready(function() {
         value: volumeSliderValue,
         tooltip: 'always'
       });
+    }
 
+    function initCheckboxToogle(checkboxValue) {
+      //Init checkbox toogle.
+      $volumeSyncInput.prop('checked', checkboxValue);
+      $volumeSyncInput.bootstrapToggle(
+        {
+          on: _t.OPTIONS['CHECKBOX_ON_TEXT'],
+          off: _t.OPTIONS['CHECKBOX_OFF_TEXT'],
+          size: 'small'
+        }
+      );
+      console.log('Init Checkbox in ' + checkboxValue + ' value.');
     }
 
     chrome.storage.local.get('sync', function(response) {
       if(typeof response.sync === 'undefined' || response.sync) {
-        console.log('Loading Volume from Sync Storage.');
-        chrome.storage.sync.get('volume', setSliderVolume);
+        console.log('Loading Volume from SYNC Storage.');
+        chrome.storage.sync.get('volume', initSliderVolumeCbk);
+        initCheckboxToogle(true);
       }
       else {
-        console.log('Loading Volume from Local Storage.');
-        chrome.storage.local.get('volume', setSliderVolume);
+        console.log('Loading Volume from LOCAL Storage.');
+        chrome.storage.local.get('volume', initSliderVolumeCbk);
+        initCheckboxToogle(false);
       }
     });
 
-    $volumeValue.bind('change', function(data){
+    $volumeInput.change(function(data){
       var volumeValue = data.value.newValue / 100;
 
       chrome.storage.local.get('sync', function(response) {
         var sendData = {
-              volume: volumeValue,
+              volume: volumeValue
+            },
+            dataObj = {
               oldValue: data.value.oldValue,
               newValue: data.value.newValue
             };
 
         if(response.sync) {
-          storageSyncSet(sendData);
-          sendData.sync = true;
-          storageLocalSet(sendData);
+          storageSyncSet(sendData, dataObj);
         }
         else {
-          sendData.sync = false;
-          storageLocalSet(sendData);
+          storageLocalSet(sendData, dataObj);
         }
       });
     });
 
-    $volumeSyncValue.bind('change',function(element) {
-      var volumeValue = $volumeValue.slider('getValue') / 100,
-          sendData = {
-            volume: volumeValue
-          };
+    $volumeSyncInput.change(function(element) {
+      var volumeValue = $volumeInput.slider('getValue') / 100;
+;
       if(element.target.checked) {
-        storageSyncSet(sendData);
-        sendData.sync = true;
-        storageLocalSet(sendData);
+        storageSyncSet({volume: volumeValue});
+        storageLocalSet({sync: true});
+        console.log('Checked to true and volume ' + volumeValue + ' saving in SYNC storage.');
       }
       else {
-        sendData.sync = false;
-        storageLocalSet(sendData);
+        storageLocalSet({volume: volumeValue, sync: false});
+        console.log('Checked to false. Using LOCAL storage with volume in ' + volumeValue + '.');
       }
     })
 
     $('#resetBtn').click(function() {
-      $volumeValue.slider('setValue', 70);
-      if($volumeSyncValue.is(':checked')) {
-        $volumeSyncValue.click();
+      $volumeInput.slider('setValue', 70);
+      storageLocalSet({volume: 0.7, sync: false});
+      if($volumeSyncInput.is(':checked')) {
+        $volumeSyncInput.bootstrapToggle('toggle');
       }
-      console.log('Sent Volume reset to 70');
-      console.log('Sent Sync reset to false');
+      console.log('Sent Volume RESET to 70');
+      console.log('Sent Sync RESET to false');
     });
 
     chrome.storage.onChanged.addListener(function(changes, namespace) {
       for (key in changes) {
         var storageChange = changes[key];
         if(namespace === 'sync') {
-          if(key === 'volume' && $volumeSyncValue.is(':checked')) {
+          if(key === 'volume' && $volumeSyncInput.is(':checked')) {
             var updateVolumeValue = storageChange.newValue * 100;
-            $volumeValue.slider('setValue',  updateVolumeValue);
-            console.log('Update Volume by Sync to ' + updateVolumeValue);
+            $volumeInput.slider('setValue',  updateVolumeValue);
+            console.log('Updating slider Volume by Sync to ' + updateVolumeValue);
           } else {
-            console.log('Sync update is called but not applied.');
+            console.log('Sync update is called but not applied in slider because is Local.');
           }
           console.log('Storage key "%s" in namespace "%s" changed. ' +
                       'Old value was "%s", new value is "%s".',

@@ -4,13 +4,15 @@
     "PLAYING_GAMBA_FM": "Reproduciendo Gamba FM"
   },
   "OPTIONS": {
-    "SETTING_PAGE_TITLE": "Configuración Gamba FM Chrome App",
-    "SETTING_TITLE": "Configuración",
+    "SETTING_HEAD_TITLE": "Configuración Gamba FM Chrome App",
+    "SETTING_TITLE": "Configuraciones",
     "VOLUME_OPTION": "Volumen",
-    "VOLUME_SYNC_VALUE": "Sincronizar el volumen en todos los navegadores instalados",
-    "VOLUME_SYNC_TITLE_ATTR": "Tildar para sincronizar el volumen globalmente o Sin tildar para usar localmente",
+    "VOLUME_SYNC_VALUE": "Usar este volumen en todos los navegadores instalados",
+    "VOLUME_SYNC_TITLE_ATTR": "Elegir SI para sincronizar el volumen globalmente o NO para usar localmente",
     "RESET_BUTTON": "Reestablecer",
-    "COPYRIGHT_TEXT": "Gamba FM Chrome App - no oficial"
+    "COPYRIGHT_TEXT": "Gamba FM Chrome App - no oficial",
+    "CHECKBOX_ON_TEXT": "Si",
+    "CHECKBOX_OFF_TEXT": "No"
   },
   "ERROR": {
     "ERROR_URL_NOT_RESPONSE": "ERROR: URL NO RESPONDE",

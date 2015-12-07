@@ -11,8 +11,8 @@ chrome.browserAction.getTitle({}, function(title){
 
 var ln = window.navigator.language || navigator.browserLanguage,
 	data = {
-        "streamUrl" : "http://74.222.1.133:22010/GAMBAFM",
-        "streamUrl2": "http://gambafm.lorini.net:10630/;",
+        "streamUrl" : "http://gambafm.lorini.net:10630/;",
+        "streamUrl2": "http://74.222.1.133:22010/GAMBAFM",
         "streamType": "mp3"
     },
     streamMedia = new Object(),

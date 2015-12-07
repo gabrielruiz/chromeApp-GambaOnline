@@ -46,9 +46,7 @@ function initPlayer() {
         console.log('::Setting by default::');
         chrome.storage.local.set({volume: 0.7, sync: false}, function() {
           console.log('Init in LOCAL storage.');
-          chrome.storage.local.set({}, function() {
-            initSetVolume();
-          });
+          initSetVolume();
         });
       }
     })

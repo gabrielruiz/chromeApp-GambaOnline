@@ -22,10 +22,12 @@ var ln = window.navigator.language || navigator.browserLanguage,
     jplayer_1;
 
 // Loading data.json from github
-$.getJSON('https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/data.json', function(response) { 
-  data = response;
-  console.log('Using data.json');
-});
+(function($) {
+  $.getJSON('https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/data.json', function(response) { 
+    data = response;
+    console.log('Using data.json');
+  });
+})(jQuery);
 
 function initPlayer() {
 

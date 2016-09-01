@@ -21,13 +21,6 @@ var ln = window.navigator.language || navigator.browserLanguage,
     _t,
     jplayer_1;
 
-// Loading data.json from github
-(function($) {
-  $.getJSON('https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/data.json', function(response) { 
-    data = response;
-    console.log('Using data.json');
-  });
-})(jQuery);
 
 function initPlayer() {
 
@@ -185,10 +178,16 @@ function init() {
 
 $(document).ready(function() {
 	jplayer_1 = $("#jquery_jplayer_1");
-	init().then(function(value) {
-		_t = value;
-    	initPlayer();
-	});
+  init().then(function(value) {
+    _t = value;
+  });
+  // Loading data.json from github and init player.
+  $.getJSON('https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/data.json', function(response) { 
+    data = response;
+    console.log('Using data.json');
+    initPlayer();
+  });
+
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {

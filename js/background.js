@@ -10,11 +10,7 @@ chrome.browserAction.getTitle({}, function(title){
 
 
 var ln = window.navigator.language || navigator.browserLanguage,
-	data = {
-        "streamUrl" : "http://gambafm.lorini.net:10630/;",
-        "streamUrl2": "http://74.222.1.133:22010/GAMBAFM",
-        "streamType": "mp3"
-    },
+    data = {},
     streamMedia = new Object(),
     timeInterval = (60 * 1000) * 60,
     timeReconnection = (60 * 1000) * 5,
@@ -25,6 +21,11 @@ var ln = window.navigator.language || navigator.browserLanguage,
     _t,
     jplayer_1;
 
+// Loading data.json from github
+$.getJSON('https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/data.json', function(response) { 
+  data = response;
+  console.log('Using data.json');
+});
 
 function initPlayer() {
 
@@ -151,22 +152,20 @@ function ReConnect(STATE) {
     var state = (typeof STATE !== 'undefined') ? STATE : "play";
 
     if(reconnectingCounter === reconnectionAttempts) {
-        reconnectingCounter = 0;
+        reconnectingCounter = 1;
         SetTimeOut(function () {
             ReConnect(STATE);
         }, timeReconnection);
         return;
     }
 
-    if (reconnectingCounter%2 === 0) {
-        streamMedia[data['streamType']] = data['streamUrl'];
-        jplayer_1.jPlayer("setMedia", streamMedia).jPlayer(state);
-
-    }
-    else {
+    streamMedia[data['streamType']] = data['streamUrl'];
+    
+    if(reconnectingCounter%3 === 0 && typeof data['streamUrl2'] !== 'undefined') {
         streamMedia[data['streamType']] = data['streamUrl2'];
-        jplayer_1.jPlayer("setMedia", streamMedia).jPlayer(state);
     }
+    
+    jplayer_1.jPlayer("setMedia", streamMedia).jPlayer(state);
 
     reconnectingCounter++;
 }

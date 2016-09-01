@@ -53,6 +53,9 @@ I'll improve this extension as soon as possible to learn more about the use of C
 Releases:
 ======
 
++ **1.3.2**:
+  - Manage the data externally.
+
 + **1.3.1**:
   - Minor fix when the app is used by first time saving default data in local storage.
   - Code improves reducing lines.

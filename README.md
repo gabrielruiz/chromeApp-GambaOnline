@@ -3,7 +3,7 @@ Chrome extension APP
 
 This chrome extension app was made to use it as complement in Chrome to listen Gamba FM Online easily and quickly.
 
-![Gamba FM APP Online](/img/gambaFmChromeApp.png)
+![Gamba FM APP Online](https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/img/gambaFmChromeApp.png)
 
 Information
 ======
@@ -21,15 +21,15 @@ The following steps are needed to add the official latest version published in C
 
 3) The app icon should be available on the app bar. Click on it to play or pause the radio.
 
-![Gamba FM APP Online icon](/img/clickOnGambaApp.gif)
+![Gamba FM APP Online icon](https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/img/clickOnGambaApp.gif)
 
 4) Adjust the volume app doing right click on the app icon and select Options.
 
-![Gamba FM APP Options](/img/clickOnOptions.gif)
+![Gamba FM APP Options](https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/img/clickOnOptions.gif)
 
 5) Configure the volmen app as you want applying it both locally or globally synchronously in all the chrome browsers where the app is installed.
 
-![Gamba FM APP Settings](/img/settingGambaApp.gif)
+![Gamba FM APP Settings](https://raw.githubusercontent.com/gabrielruiz/chromeApp-GambaOnline/master/img/settingGambaApp.gif)
 
 Install the repository version using .crx file:
 ======

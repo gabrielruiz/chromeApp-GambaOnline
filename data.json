@@ -1,10 +1,5 @@
-[
-    {
-		"streamUrl": "http://gambafm.lorini.net:10630/stream/1/",
-		"streamType": "mp3"
-	},
-	{
-		"streamUrl": "http://69.30.201.222:10630",
-		"streamType": "mp3"
-	}
-]
+{
+	"streamUrl": "http://gambafm.lorini.net:10630/stream/1/",
+	"streamUrl2": "http://69.30.201.222:10630",
+	"streamType": "mp3"
+}

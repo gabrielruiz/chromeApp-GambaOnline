@@ -53,6 +53,9 @@ I'll improve this extension as soon as possible to learn more about the use of C
 Releases:
 ======
 
++ **1.4.0**:
+  - Upgrade code to support Manifest v3.
+
 + **1.3.3**:
   - Fix Maximum call stack size exceeded error.
 

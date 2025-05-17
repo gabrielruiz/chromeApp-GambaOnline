@@ -39,6 +39,24 @@ function storageSyncSet(setData, data) {
   });
 }
 
+// Function to notify the service worker of settings changes
+function notifyServiceWorker(settings) {
+  chrome.runtime.sendMessage(
+    {
+      target: 'service-worker', // As defined in your service_worker.js listener
+      type: 'settingsUpdated',
+      data: settings
+    },
+    function(response) {
+      if (chrome.runtime.lastError) {
+        console.error('Error sending settings to service worker:', chrome.runtime.lastError.message);
+      } else {
+        console.log('Settings sent to service worker, response:', response);
+      }
+    }
+  );
+}
+
 $(document).ready(function() {
   init().then(function(value) {
 
@@ -121,12 +139,13 @@ $(document).ready(function() {
         else {
           storageLocalSet(sendData, dataObj);
         }
+        // Notify service worker about sync preference and current volume
+        notifyServiceWorker({ volume: volumeValue});
       });
     });
 
     $volumeSyncInput.change(function(element) {
       var volumeValue = $volumeInput.slider('getValue') / 100;
-;
       if(element.target.checked) {
         storageSyncSet({volume: volumeValue});
         storageLocalSet({sync: true});
@@ -136,7 +155,9 @@ $(document).ready(function() {
         storageLocalSet({volume: volumeValue, sync: false});
         console.log('Checked to false. Using LOCAL storage with volume in ' + volumeValue + '.');
       }
-    })
+      // Notify service worker about sync preference and current volume
+      notifyServiceWorker({ volume: volumeValue, syncEnabled: element.target.checked });
+    });
 
     $('#resetBtn').click(function() {
       $volumeInput.slider('setValue', 70);
@@ -146,6 +167,8 @@ $(document).ready(function() {
       }
       console.log('Sent Volume RESET to 70');
       console.log('Sent Sync RESET to false');
+      // Notify service worker about reset
+      notifyServiceWorker({ volume: 0.7, syncEnabled: false });
     });
 
     chrome.storage.onChanged.addListener(function(changes, namespace) {
